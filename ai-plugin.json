@@ -1,0 +1,15 @@
+{
+    "schema_version": "v1",
+    "name_for_human": "SoundPad Flex API",
+    "name_for_model": "soundpad_flex",
+    "description_for_human": "Play custom sound buttons.",
+    "description_for_model": "Add, list and play user-provided sound clips.",
+    "auth": { "type": "none" },
+    "api": {
+      "type": "openapi",
+      "url": "https://dc013b7cc843.ngrok-free.app/openapi.yaml"
+    },
+    "logo_url": "https://dc013b7cc843.ngrok-free.app/logo.png",
+    "contact_email": "you@example.com",
+    "legal_info_url": "https://example.com/terms"
+  }
