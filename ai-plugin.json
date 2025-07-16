@@ -11,10 +11,10 @@
 
   "api": {
     "type": "openapi",
-    "url": "https://b2ade6e077a4.ngrok-free.app/openapi.yaml"
+    "url": "https://8e62f9f05452.ngrok-free.app/openapi.yaml"
   },
 
-  "logo_url":   "https://b2ade6e077a4.ngrok-free.app/logo.png",
+  "logo_url":   "https://8e62f9f05452.ngrok-free.app/logo.png",
   "contact_email": "you@example.com",
   "legal_info_url": "https://example.com/terms"
 }
