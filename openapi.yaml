@@ -4,21 +4,66 @@ info:
   version: 1.0.0
 
 servers:
-  - url: https://dc013b7cc843.ngrok-free.app
+  - url: https://dc6d8ead5df8.ngrok-free.app
 
 paths:
-  /ping:
+  /sounds:
     get:
-      summary: Health-check
-      operationId: ping
+      summary: List sounds
+      operationId: listSounds
       responses:
-        '200':
-          description: Pong
+        "200":
+          description: Array of sounds
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  msg:
-                    type: string
-                    example: pong
+                type: array
+                items:
+                  $ref: "#/components/schemas/Sound"
+    post:
+      summary: Upload sound
+      operationId: uploadSound
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200": { $ref: "#/components/responses/SoundResp" }
+
+  /sounds/{id}/play:
+    get:
+      summary: Play sound
+      operationId: playSound
+      parameters:
+        - in: path
+          name: id
+          schema: { type: integer }
+          required: true
+      responses:
+        "200":
+          description: Played
+          content:
+            application/json:
+              schema: { type: object, properties: { msg: { type: string } } }
+
+components:
+  schemas:
+    Sound:
+      type: object
+      properties:
+        id:   { type: integer }
+        name: { type: string }
+        url:  { type: string }
+  responses:
+    SoundResp:
+      description: Sound object
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Sound" }
+
