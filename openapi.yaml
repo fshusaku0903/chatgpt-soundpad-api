@@ -4,7 +4,7 @@ info:
   version: 1.0.0
 
 servers:
-  - url: https://8e62f9f05452.ngrok-free.app
+  - url: https://105428542a00.ngrok.app
 
 paths:
   /sounds:
