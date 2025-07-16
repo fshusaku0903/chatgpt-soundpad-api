@@ -34,4 +34,4 @@ app.get('/sounds/:id/play', (req, res) => {
 });
 
 app.get('/ping', (_, res) => res.json({ msg: 'pong' }));
-app.listen(3000, () => console.log('API on :3000'));
+app.listen(8080, () => console.log('API on :8080'));
