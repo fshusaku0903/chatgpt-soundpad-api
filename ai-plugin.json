@@ -11,7 +11,7 @@
 
   "api": {
     "type": "openapi",
-    "url": "https://7182539511e7.ngrok.app/openapi.yaml"
+    "url": "https://7182539511e7.ngrok.app/openapi.yaml?v=20250717"
   },
 
   "logo_url":   "https://7182539511e7.ngrok.app/logo.png",
