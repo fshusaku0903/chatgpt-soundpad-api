@@ -5,6 +5,7 @@ const path = require('path');
 const app = express();
 
 app.use(express.json());
+app.use(express.static('.'));
 app.use('/files', express.static(path.join(__dirname, 'public/files')));
 
 const upload = multer({ dest: 'public/files' });
