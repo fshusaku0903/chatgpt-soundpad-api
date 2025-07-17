@@ -5,6 +5,9 @@ const path = require('path');
 const app = express();
 
 app.use(express.json());
+app.get('/openapi.yaml', (_, res) => {
+  res.type('text/yaml').sendFile(path.join(__dirname, 'openapi.yaml'));
+});
 app.use(express.static('.'));
 app.use('/files', express.static(path.join(__dirname, 'public/files')));
 
