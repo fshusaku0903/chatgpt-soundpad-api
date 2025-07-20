@@ -11,10 +11,10 @@
 
   "api": {
     "type": "openapi",
-    "url": "https://7b27fc77e236.ngrok.app/openapi.yaml"
+    "url": "https://soundpad-flex.ngrok.io/openapi.yaml"
   },
 
-  "logo_url":   "https://7b27fc77e236.ngrok.app/logo.png",
+  "logo_url":   "https://soundpad-flex.ngrok.io/logo.png",
   "contact_email": "you@example.com",
   "legal_info_url": "https://example.com/terms"
 }

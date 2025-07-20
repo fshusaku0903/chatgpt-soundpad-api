@@ -4,7 +4,7 @@ info:
   version: 1.0.0
 
 servers:
-  - url: https://7b27fc77e236.ngrok.app
+  - url: https://soundpad-flex.ngrok.io
 
 paths:
   /sounds:
