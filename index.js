@@ -6,24 +6,35 @@ const app     = express();
 
 app.use(express.json());
 
-/* ★ JSON / YAML を必ず 200 で返す固定ルート -------- */
+/* 1) .well-known 用 ─ Builder が最初に探す場所 */
+app.get('/.well-known/ai-plugin.json', (_, res) => {
+  res.type('application/json')
+     .sendFile(path.join(__dirname, '.well-known/ai-plugin.json'));
+});
+app.get('/.well-known/openapi.yaml', (_, res) => {
+  res.type('text/yaml')
+     .sendFile(path.join(__dirname, '.well-known/openapi.yaml'));
+});
+
+/* 2) ルート直下用 ─ 手動テスト用に残しても OK */
 app.get('/ai-plugin.json', (_, res) => {
-  res.type('application/json').sendFile(path.join(__dirname, 'ai-plugin.json'));
+  res.type('application/json')
+     .sendFile(path.join(__dirname, 'ai-plugin.json'));
 });
 app.get('/openapi.yaml', (_, res) => {
-  res.type('text/yaml').sendFile(path.join(__dirname, 'openapi.yaml'));
+  res.type('text/yaml')
+     .sendFile(path.join(__dirname, 'openapi.yaml'));
 });
-/* --------------------------------------------------- */
 
-/* ここより下で静的配信をまとめて許可 */
+/* 3) その他の静的ファイル */
 app.use(express.static('.'));
 app.use('/files', express.static(path.join(__dirname, 'public/files')));
 
+/* 4) API 本体 */
 const upload = multer({ dest: 'public/files' });
 let sounds = [];
 let seq = 1;
 
-/* API 本体 */
 app.get('/sounds', (_, res) => res.json(sounds));
 
 app.post('/sounds', upload.single('file'), (req, res) => {
@@ -42,7 +53,7 @@ app.get('/sounds/:id/play', (req, res) => {
   res.json({ msg: 'ok', url: snd.url });
 });
 
-/* ヘルスチェック */
+/* 5) ヘルスチェック */
 app.get('/ping', (_, res) => res.json({ msg: 'pong' }));
 
 app.listen(8080, () => console.log('API on :8080'));
