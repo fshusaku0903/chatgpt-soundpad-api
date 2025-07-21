@@ -9,11 +9,11 @@ app.use(express.json());
 /* 1) .well-known 用 ─ Builder が最初に探す場所 */
 app.get('/.well-known/ai-plugin.json', (_, res) => {
   res.type('application/json')
-     .sendFile(path.join(__dirname, '.well-known/ai-plugin.json'));
+     .sendFile(path.join(__dirname, '.well-known', 'ai-plugin.json'));
 });
 app.get('/.well-known/openapi.yaml', (_, res) => {
   res.type('text/yaml')
-     .sendFile(path.join(__dirname, '.well-known/openapi.yaml'));
+     .sendFile(path.join(__dirname, '.well-known', 'openapi.yaml'));
 });
 
 /* 2) ルート直下用 ─ 手動テスト用に残しても OK */
