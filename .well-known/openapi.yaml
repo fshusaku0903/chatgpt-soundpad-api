@@ -2,9 +2,10 @@ openapi: 3.0.1
 info:
   title: SoundPad Flex API
   version: 1.0.0
+  description: A simple soundboard API for playing custom sound clips
 
 servers:
-  - url: https://soundpad-flex.ngrok.io/
+  - url: https://soundpad-flex.ngrok.io
 
 paths:
   /sounds:
