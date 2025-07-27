@@ -1,0 +1,81 @@
+---               # ← 1 行目にドキュメントスタートを追加
+openapi: 3.0.1
+info:
+  title: SoundPad Flex API
+  version: 1.0.0
+
+servers:
+  - url: https://soundpad-flex.ngrok.io/
+
+paths:
+  /sounds:
+    get:
+      summary: List sounds
+      operationId: listSounds
+      responses:
+        "200":
+          description: Array of sounds
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Sound"
+
+    post:
+      summary: Upload sound
+      operationId: uploadSound
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          $ref: "#/components/responses/SoundResp"
+
+  /sounds/{id}/play:
+    get:
+      summary: Play sound
+      operationId: playSound
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Played
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+
+components:
+  schemas:
+    Sound:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+
+  responses:
+    SoundResp:
+      description: Sound object
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Sound"

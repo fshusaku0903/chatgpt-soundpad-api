@@ -12,7 +12,7 @@ app.get('/.well-known/ai-plugin.json', (_, res) => {
      .sendFile(path.join(__dirname, '.well-known', 'ai-plugin.json'));
 });
 app.get('/.well-known/openapi.yaml', (_, res) => {
-  res.type('text/yaml')
+  res.set('Content-Type', 'text/yaml; charset=utf-8')
      .sendFile(path.join(__dirname, '.well-known', 'openapi.yaml'));
 });
 
@@ -27,8 +27,8 @@ app.get('/openapi.yaml', (_, res) => {
 });
 
 /* 3) その他の静的ファイル */
-app.use(express.static('.'));
 app.use('/files', express.static(path.join(__dirname, 'public/files')));
+app.use(express.static('.'));
 
 /* 4) API 本体 */
 const upload = multer({ dest: 'public/files' });
