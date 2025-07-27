@@ -55,6 +55,28 @@ app.get('/.well-known/openapi.yaml', (req, res) => {
   }
 });
 
+// JSON形式でのOpenAPIファイルも提供
+app.get('/.well-known/openapi.json', (req, res) => {
+  console.log('GET /.well-known/openapi.json');
+  const yamlPath = path.join(__dirname, '.well-known', 'openapi.yaml');
+  
+  if (!require('fs').existsSync(yamlPath)) {
+    console.log('File not found!');
+    return res.status(404).json({ error: 'File not found', path: yamlPath });
+  }
+  
+  try {
+    const yaml = require('fs').readFileSync(yamlPath, 'utf8');
+    const yamljs = require('yamljs');
+    const json = yamljs.parse(yaml);
+    console.log('JSON content length:', JSON.stringify(json).length);
+    res.set('Content-Type', 'application/json; charset=utf-8').json(json);
+  } catch (error) {
+    console.log('Error converting YAML to JSON:', error);
+    res.status(500).json({ error: 'Error converting YAML to JSON', message: error.message });
+  }
+});
+
 /* 2) ルート直下用 ─ 手動テスト用に残しても OK */
 app.get('/ai-plugin.json', (_, res) => {
   res.type('application/json')
