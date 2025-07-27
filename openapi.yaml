@@ -1,4 +1,3 @@
----               # ← 1 行目にドキュメントスタートを追加
 openapi: 3.0.1
 info:
   title: SoundPad Flex API
