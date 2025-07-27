@@ -37,7 +37,11 @@ paths:
                   format: binary
       responses:
         "200":
-          $ref: "#/components/responses/SoundResp"
+          description: Sound uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sound"
 
   /sounds/{id}/play:
     get:
@@ -51,7 +55,7 @@ paths:
             type: integer
       responses:
         "200":
-          description: Played
+          description: Sound played successfully
           content:
             application/json:
               schema:
@@ -59,6 +63,10 @@ paths:
                 properties:
                   msg:
                     type: string
+                    example: "ok"
+                  url:
+                    type: string
+                    example: "/files/sound.mp3"
 
 components:
   schemas:
@@ -67,15 +75,14 @@ components:
       properties:
         id:
           type: integer
+          example: 1
         name:
           type: string
+          example: "sound.mp3"
         url:
           type: string
-
-  responses:
-    SoundResp:
-      description: Sound object
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Sound"
+          example: "/files/sound.mp3"
+      required:
+        - id
+        - name
+        - url

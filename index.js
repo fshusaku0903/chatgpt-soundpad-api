@@ -48,7 +48,7 @@ app.get('/.well-known/openapi.yaml', (req, res) => {
   try {
     const content = require('fs').readFileSync(filePath, 'utf8');
     console.log('File content length:', content.length);
-    res.set('Content-Type', 'text/yaml; charset=utf-8').send(content);
+    res.set('Content-Type', 'application/yaml; charset=utf-8').send(content);
   } catch (error) {
     console.log('Error reading file:', error);
     res.status(500).json({ error: 'Error reading file', message: error.message });
