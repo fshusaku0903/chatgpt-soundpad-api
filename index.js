@@ -6,14 +6,53 @@ const app     = express();
 
 app.use(express.json());
 
-/* 1) .well-known 用 ─ Builder が最初に探す場所 */
-app.get('/.well-known/ai-plugin.json', (_, res) => {
-  res.type('application/json')
-     .sendFile(path.join(__dirname, '.well-known', 'ai-plugin.json'));
+// すべてのリクエストをログに出力
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
 });
-app.get('/.well-known/openapi.yaml', (_, res) => {
-  res.set('Content-Type', 'text/yaml; charset=utf-8')
-     .sendFile(path.join(__dirname, '.well-known', 'openapi.yaml'));
+
+/* 1) .well-known 用 ─ Builder が最初に探す場所 */
+app.get('/.well-known/ai-plugin.json', (req, res) => {
+  console.log('GET /.well-known/ai-plugin.json');
+  const filePath = path.join(__dirname, '.well-known', 'ai-plugin.json');
+  console.log('File path:', filePath);
+  console.log('__dirname:', __dirname);
+  console.log('File exists:', require('fs').existsSync(filePath));
+  
+  if (!require('fs').existsSync(filePath)) {
+    console.log('File not found!');
+    return res.status(404).json({ error: 'File not found', path: filePath });
+  }
+  
+  try {
+    const content = require('fs').readFileSync(filePath, 'utf8');
+    console.log('File content length:', content.length);
+    res.type('application/json').send(content);
+  } catch (error) {
+    console.log('Error reading file:', error);
+    res.status(500).json({ error: 'Error reading file', message: error.message });
+  }
+});
+app.get('/.well-known/openapi.yaml', (req, res) => {
+  console.log('GET /.well-known/openapi.yaml');
+  const filePath = path.join(__dirname, '.well-known', 'openapi.yaml');
+  console.log('File path:', filePath);
+  console.log('File exists:', require('fs').existsSync(filePath));
+  
+  if (!require('fs').existsSync(filePath)) {
+    console.log('File not found!');
+    return res.status(404).json({ error: 'File not found', path: filePath });
+  }
+  
+  try {
+    const content = require('fs').readFileSync(filePath, 'utf8');
+    console.log('File content length:', content.length);
+    res.set('Content-Type', 'text/yaml; charset=utf-8').send(content);
+  } catch (error) {
+    console.log('Error reading file:', error);
+    res.status(500).json({ error: 'Error reading file', message: error.message });
+  }
 });
 
 /* 2) ルート直下用 ─ 手動テスト用に残しても OK */
@@ -28,7 +67,6 @@ app.get('/openapi.yaml', (_, res) => {
 
 /* 3) その他の静的ファイル */
 app.use('/files', express.static(path.join(__dirname, 'public/files')));
-app.use(express.static('.'));
 
 /* 4) API 本体 */
 const upload = multer({ dest: 'public/files' });
