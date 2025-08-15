@@ -5,7 +5,7 @@ info:
   description: A simple soundboard API for playing custom sound clips
 
 servers:
-  - url: https://soundpad-flex.ngrok.io/
+  - url: url: https://soundpad-flex.ngrok.io
 
 paths:
   /sounds:

@@ -13,7 +13,7 @@ app.use((req, res, next) => {
 });
 
 /* 1) .well-known 用 ─ Builder が最初に探す場所 */
-app.get('/.well-known/ai-plugin.json', (req, res) => {
+app.get('/.well-known/openapi.yaml', (req, res) => {
   console.log('GET /.well-known/ai-plugin.json');
   const filePath = path.join(__dirname, '.well-known', 'ai-plugin.json');
   console.log('File path:', filePath);
@@ -26,9 +26,10 @@ app.get('/.well-known/ai-plugin.json', (req, res) => {
   }
   
   try {
-    const content = require('fs').readFileSync(filePath, 'utf8');
+   const content = require('fs').readFileSync(filePath, 'utf8');
     console.log('File content length:', content.length);
-    res.type('application/json').send(content);
+    // Builderとの相性を取り、明示的に text/yaml で返す
+    res.type('text/yaml').send(content);
   } catch (error) {
     console.log('Error reading file:', error);
     res.status(500).json({ error: 'Error reading file', message: error.message });
